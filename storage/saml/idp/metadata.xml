@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata"
+                     validUntil="2017-10-19T14:13:50Z"
+                     cacheDuration="PT1508854430S"
+                     entityID="https://drive.google.com/a/digitalvillage.de">
+    <md:IDPSSODescriptor WantAuthnRequestsSigned="false" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+        <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
+                                Location="https://38494191.ngrok.io/logout"/>
+        <md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified</md:NameIDFormat>
+        <md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
+                                Location="https://38494191.ngrok.io/login"/>
+    </md:IDPSSODescriptor>
+</md:EntityDescriptor>

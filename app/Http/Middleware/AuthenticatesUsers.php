@@ -1,18 +1,31 @@
 <?php
-namespace App\Http\Traits;
 
-use Illuminate\Foundation\Auth\RedirectsUsers;
-use Illuminate\Foundation\Auth\ThrottlesLogins;
+namespace App\Http\Middleware;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Foundation\Auth\RedirectsUsers;
+use Illuminate\Foundation\Auth\ThrottlesLogins;
 
-
+//use KingStarter\LaravelSaml\Http\Traits\SamlAuth;
 
 trait AuthenticatesUsers
 {
-    use RedirectsUsers, ThrottlesLogins, SamlAuth;
+    use RedirectsUsers, ThrottlesLogins ;
 
+
+    protected function authenticated(Request $request, $user)
+    {
+        /*if(Auth::check() && isset($request['SAMLRequest'])) {
+            $this->handleSamlLoginRequest($request);
+        }*/
+
+
+        if(Auth::check() && isset($request['SAMLRequest'])) {
+            //Log::debug('Found saml request, try to make saml response');
+            new SamlAuth($request);
+        }
+    }
     /**
      * Show the application's login form.
      *
@@ -62,6 +75,7 @@ trait AuthenticatesUsers
      */
     protected function validateLogin(Request $request)
     {
+
         $this->validate($request, [
             $this->username() => 'required|string',
             'password' => 'required|string',
@@ -108,20 +122,6 @@ trait AuthenticatesUsers
             ?: redirect()->intended($this->redirectPath());
     }
 
-    /**
-     * The user has been authenticated.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  mixed  $user
-     * @return mixed
-     */
-    protected function authenticated(Request $request, $user)
-    {
-        if(isset($request['SAMLRequest'])){
-            //new SamlAuth($request);
-            SamlAuth::handleSAMLRequest($request);
-        }
-    }
 
     /**
      * Get the failed login response instance.
@@ -172,6 +172,4 @@ trait AuthenticatesUsers
     {
         return Auth::guard();
     }
-
-
 }

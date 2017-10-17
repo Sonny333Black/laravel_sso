@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Traits\AuthenticatesUsers;
+use App\Http\Middleware\AuthenticatesUsers;
 
 class LoginController extends Controller
 {
