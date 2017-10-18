@@ -7,24 +7,25 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\RedirectsUsers;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 
-//use KingStarter\LaravelSaml\Http\Traits\SamlAuth;
+use KingStarter\LaravelSaml\Http\Traits\SamlAuth;
 
 trait AuthenticatesUsers
 {
-    use RedirectsUsers, ThrottlesLogins ;
+    use RedirectsUsers, ThrottlesLogins, SamlAuth ;
 
 
     protected function authenticated(Request $request, $user)
     {
-        /*if(Auth::check() && isset($request['SAMLRequest'])) {
-            $this->handleSamlLoginRequest($request);
-        }*/
-
-
         if(Auth::check() && isset($request['SAMLRequest'])) {
+            $this->handleSamlLoginRequest($request);
+        }
+
+
+        /*if(Auth::check() && isset($request['SAMLRequest'])) {
             //Log::debug('Found saml request, try to make saml response');
             new SamlAuth($request);
-        }
+        }*/
+
     }
     /**
      * Show the application's login form.

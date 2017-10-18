@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Illuminate\Http\Request;
 use Closure;
 use App\Http\Controllers\SamlIdpController;
+use Illuminate\Support\Facades\Storage;
 use LightSaml\Model\Protocol\Response as Response;
 use Illuminate\Support\Facades\Log;
 
@@ -44,8 +45,8 @@ class SamlAuth
         $issuer = config('saml.sp.'.base64_encode($authnRequest->getAssertionConsumerServiceURL()).'.issuer');
 
         // Note: Storing the certificate key in an openly accessible path is very insecure !
-        $certificate = \LightSaml\Credential\X509Certificate::fromFile(config('saml.idp.cert'));
-        $privateKey = \LightSaml\Credential\KeyHelper::createPrivateKey(config('saml.idp.key'), '', true);
+        $certificate = \LightSaml\Credential\X509Certificate::fromFile(storage_path('saml/').config('saml.idp.cert'));
+        $privateKey = \LightSaml\Credential\KeyHelper::createPrivateKey(storage_path('saml/').config('saml.idp.key'), '', true);
 
         $response = new \LightSaml\Model\Protocol\Response();
         $response

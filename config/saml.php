@@ -73,7 +73,7 @@ return [
          */
         'aHR0cHM6Ly9zcC53ZWJhcHAuY29tL3NhbWwvY29uc3VtZQ==' => [
             'destination' => 'https://drive.google.com/a/digitalvillage.de/saml/consume',
-            'issuer'      => 'https:/localhost/saml/idp/metadata',
+            'issuer'      => 'https://drive.google.com',
         ],
         
     ],

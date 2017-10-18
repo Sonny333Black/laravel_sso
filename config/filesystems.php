@@ -65,7 +65,7 @@ return [
 
         'saml' => [
             'driver' => 'local',
-            'root' => storage_path().'/saml',
+            'root' => storage_path('saml'),
         ],
 
     ],
